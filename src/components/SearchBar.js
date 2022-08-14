@@ -1,6 +1,47 @@
-import React from "react";
+import React, {useState} from "react";
 
-function SearchBar() {
+function SearchBar({alphebatiseStocks, deAlphebatiseStocks, orderStocksByPrice, handleSelectChange}) {
+
+  const [alphChecked, setAlphChecked]= useState(false)
+
+  const [priceChecked, setPriceChecked]= useState(false)
+
+  function handleChange(e){
+    
+    if(alphChecked === false){
+      alphebatiseStocks(e)
+    }
+    
+    if (alphChecked === true){
+      deAlphebatiseStocks()
+    }
+
+
+    setAlphChecked(!alphChecked)
+    
+
+  }
+
+  function onSelectChange(e){
+
+    handleSelectChange(e)
+
+  }
+
+  function handlePriceChange(e){
+
+    if (priceChecked === false){
+      orderStocksByPrice()
+
+    }
+    if (priceChecked=== true){
+      deAlphebatiseStocks()
+
+    }
+
+    setPriceChecked(!priceChecked)
+  }
+  
   return (
     <div>
       <strong>Sort by:</strong>
@@ -9,8 +50,8 @@ function SearchBar() {
           type="radio"
           value="Alphabetically"
           name="sort"
-          checked={null}
-          onChange={null}
+          checked={alphChecked}
+          onClick={handleChange}
         />
         Alphabetically
       </label>
@@ -19,15 +60,15 @@ function SearchBar() {
           type="radio"
           value="Price"
           name="sort"
-          checked={null}
-          onChange={null}
+          checked={priceChecked}
+          onClick={handlePriceChange}
         />
         Price
       </label>
       <br />
       <label>
         <strong>Filter:</strong>
-        <select onChange={null}>
+        <select onChange={onSelectChange}>
           <option value="Tech">Tech</option>
           <option value="Sportswear">Sportswear</option>
           <option value="Finance">Finance</option>
